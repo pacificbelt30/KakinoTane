@@ -9,7 +9,7 @@ import (
 	"github.com/yitsushi/go-misskey/core"
 	"github.com/yitsushi/go-misskey/models"
 	"github.com/yitsushi/go-misskey/services/notes"
-	"github.com/abava00/KakinoTane/internal"
+	"github.com/abava00/KakinoTane/internal/ai"
 )
 
 func main() {
@@ -33,14 +33,16 @@ func main() {
 	log.Printf("[Stats] UsersCount:         %d", stats.UsersCount)
 	log.Printf("[Stats] OriginalNotesCount: %d", stats.OriginalNotesCount)
 	log.Printf("[Stats] OriginalUsersCount: %d", stats.OriginalUsersCount)
-	ExampleService_Create(client)
+	text := ""
+	openai.NumTokens(text)
+	// ExampleService_Create(client, text)
 }
 
-func ExampleService_Create(client *misskey.Client) {
-	text := openai.Openai()
+func ExampleService_Create(client *misskey.Client, text string) {
+	text = openai.Openai(text)
 	response, err := client.Notes().Create(notes.CreateRequest{
 		Text:       core.NewString(text),
-		Visibility: models.VisibilityHome,
+		Visibility: models.VisibilityPublic,
 	})
 	if err != nil {
 		log.Printf("[Notes] Error happened: %s", err)
