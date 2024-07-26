@@ -9,6 +9,7 @@ import (
 	"github.com/yitsushi/go-misskey/core"
 	"github.com/yitsushi/go-misskey/models"
 	"github.com/yitsushi/go-misskey/services/notes"
+	"github.com/abava00/KakinoTane/internal"
 )
 
 func main() {
@@ -36,12 +37,10 @@ func main() {
 }
 
 func ExampleService_Create(client *misskey.Client) {
+	text := openai.Openai()
 	response, err := client.Notes().Create(notes.CreateRequest{
-		Text:       core.NewString("This is API Test."),
+		Text:       core.NewString(text),
 		Visibility: models.VisibilityHome,
-		Poll: &notes.Poll{
-			Choices: []string{"a", "b", "c"},
-		},
 	})
 	if err != nil {
 		log.Printf("[Notes] Error happened: %s", err)
