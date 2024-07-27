@@ -4,6 +4,7 @@ go 1.22.2
 
 require (
 	github.com/pkoukk/tiktoken-go v0.1.7
+	github.com/robtec/newsapi v0.0.0-20180922142248-e986ded8a669
 	github.com/sashabaranov/go-openai v1.27.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/yitsushi/go-misskey v1.1.6
