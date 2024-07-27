@@ -46,7 +46,9 @@ func (mi *Misskey) GetStats() error {
 func (mi *Misskey) CreateNote(text string) error {
 	response, err := mi.client.Notes().Create(notes.CreateRequest{
 		Text:       core.NewString(text),
-		Visibility: models.VisibilityPublic,
+		// Visibility: models.VisibilityPublic,
+		Visibility: models.VisibilityHome,
+		LocalOnly: true,
 	})
 	if err != nil {
 		log.Printf("[Notes] Error happened: %s", err)
