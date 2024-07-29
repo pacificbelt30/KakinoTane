@@ -1,0 +1,29 @@
+name: Cron LLM Post to Misskey
+
+on:
+  schedule:
+    - cron: '0 */1 * * *'
+
+jobs:
+  PostComment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Download and Install MisskeyBot(KakinoTane)
+        run: |
+          curl -sLJO -H 'Accept: application/octet-stream' \
+          "https://${{ secrets.GH_TOKEN }}@api.github.com/repos/pacificbelt30/KakinoTane/releases/assets/$( \
+          curl -sL "https://${{ secrets.GH_TOKEN }}@api.github.com/repos/pacificbelt30/KakinoTane/releases/tags/v0.0.1" \
+          | jq '.assets[] | select(.name | contains("Linux_x86")) | .id')"
+          tar -zxvf kakinotane_Linux_x86_64.tar.gz
+
+      - name: Post Comment with LLM
+        run: |
+          ./kakinotane
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+          MISSKEY_TOKEN: ${{ secrets.MISSKEY_TOKEN }}
+          BASE_URL: ${{ secrets.BASE_URL }}
