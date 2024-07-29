@@ -21,7 +21,7 @@ jobs:
 
       - name: Post Comment with LLM
         run: |
-          ./kakinotane
+          ./KakinoTane
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
